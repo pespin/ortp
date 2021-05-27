@@ -63,7 +63,9 @@ endif()
 find_package(Threads)
 find_library(LIBM NAMES m)
 
-find_package(bctoolbox 0.2.0 REQUIRED)
+if(NOT DISABLE_BC_PACKAGE_SEARCH)
+	find_package(bctoolbox 0.2.0 REQUIRED)
+endif()
 
 check_include_file(sys/uio.h HAVE_SYS_UIO_H)
 check_include_file(sys/audio.h HAVE_SYS_AUDIO_H)
@@ -211,9 +213,6 @@ write_basic_package_version_file(
 	"${CMAKE_CURRENT_BINARY_DIR}/${EXPORT_TARGET_NAME}ConfigVersion.cmake"
 	VERSION ${ORTP_VERSION}
 	COMPATIBILITY AnyNewerVersion
-)
-export(EXPORT "${EXPORT_TARGET_NAME}Targets"
-	FILE "${CMAKE_CURRENT_BINARY_DIR}/${EXPORT_TARGET_NAME}Targets.cmake"
 )
 
 configure_package_config_file(ORTPConfig.cmake.in
